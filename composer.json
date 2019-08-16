@@ -8,7 +8,11 @@
     "require": {
         "php": ">=7.2",
         "scaleplan/dto": "dev-master",
-        "guzzlehttp/guzzle": "^6.3"
+        "scaleplan/http-status": "dev-master",
+        "guzzlehttp/guzzle": "^6.3",
+        "zircote/swagger-php": "*",
+        "symfony/validator": "*",
+        "symfony/property-access": "^4.3"
     },
     "require-dev": {
         "codeception/codeception": "2.4.x-dev",
