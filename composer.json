@@ -1,0 +1,19 @@
+{
+    "name": "qooiz/app",
+    "autoload": {
+        "psr-4": {
+            "Qooiz\\BillingSDK\\": "src"
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "scaleplan/dto": "dev-master",
+        "guzzlehttp/guzzle": "^6.3"
+    },
+    "require-dev": {
+        "codeception/codeception": "2.4.x-dev",
+        "sami/sami": "^4.0@dev",
+        "avtomon/sami-markdown": "dev-master",
+        "avtomon/sami-github": "dev-master"
+    }
+}
