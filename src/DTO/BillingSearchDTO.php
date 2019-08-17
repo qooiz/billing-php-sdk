@@ -1,13 +1,15 @@
 <?php
 
-namespace Qooiz\BillingSDK\xxx;
+namespace Qooiz\BillingSDK\DTO;
+
+use Scaleplan\DTO\DTO;
 
 /**
  * Class BillingSearchDTO
  *
  * @package Qooiz\BillingSDK\DTO
  */
-class BillingSearchDTO
+class BillingSearchDTO extends DTO
 {
     /**
      * @var array|null

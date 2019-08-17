@@ -1,6 +1,6 @@
 <?php
 
-namespace AppBundle\DTO\Response\InvoicesList;
+namespace Qooiz\BillingSDK\DTO\Response;
 
 use OpenApi\Annotations as SWG;
 use Scaleplan\DTO\DTO;

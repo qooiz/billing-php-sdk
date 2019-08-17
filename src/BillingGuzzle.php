@@ -2,29 +2,39 @@
 
 namespace Qooiz\BillingSDK;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException as GuzzleClientException;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ServerException;
 use Qooiz\BillingSDK\Constants\BalanceListConstants;
 use Qooiz\BillingSDK\Constants\InvoicesListConstants;
+use Qooiz\BillingSDK\DTO\BalanceRefillOrChargeOffRequestDTO;
 use Qooiz\BillingSDK\DTO\BalanceRequestDTO;
+use Qooiz\BillingSDK\DTO\BillingSearchDTO;
+use Qooiz\BillingSDK\DTO\ChargeOffOrRefillPrepareDTO;
 use Qooiz\BillingSDK\DTO\ObjectDataGetOrDeleteDTO;
+use Qooiz\BillingSDK\DTO\OrderDTO;
+use Qooiz\BillingSDK\DTO\OrderPaidDTO;
+use Qooiz\BillingSDK\DTO\Response\BalanceBriefDTO;
+use Qooiz\BillingSDK\DTO\Response\BalanceListDTO;
 use Qooiz\BillingSDK\DTO\Response\BalanceResponseDTO;
+use Qooiz\BillingSDK\DTO\Response\InvoicesListDTO;
 use Qooiz\BillingSDK\DTO\Response\ObjectDataDTO;
 use Qooiz\BillingSDK\DTO\Response\PagesDTO;
-use Qooiz\BillingSDK\DTO\SettingRequestDTO;
 use Qooiz\BillingSDK\DTO\Response\SettingResponseDTO;
+use Qooiz\BillingSDK\DTO\SettingRequestDTO;
+use Qooiz\BillingSDK\DTO\TransactionTokenDTO;
 use Qooiz\BillingSDK\Exception\ClientException;
 use Qooiz\BillingSDK\Exception\PagesDoesNotExistException;
 use Qooiz\BillingSDK\Exception\RemoteException;
 use Qooiz\BillingSDK\Exception\StructureException;
 use Qooiz\BillingSDK\Exception\TransportException;
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException as GuzzleClientException;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\ServerException;
+use Scaleplan\HttpStatus\HttpStatusCodes;
 
 /**
  * API wrapper for contracts of BillingAPI
  *
- * Documentation: http://45.63.116.71/api/docs
+ * Documentation: http://billing.test.qooiz-develop.me/api/docs
  *
  * @package App\Lib
  */
@@ -178,7 +188,7 @@ class BillingGuzzle implements BillingInterface
      */
     private function getPages(array $resultData, int $current = null) : PagesDTO
     {
-        if (empty($resultData['pages']) || !\is_array($resultData['pages'])) {
+        if (empty($resultData['pages']) || !is_array($resultData['pages'])) {
             throw new PagesDoesNotExistException();
         }
 
@@ -195,32 +205,23 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * Get balances list
+     * @param BillingSearchDTO $dto
      *
-     * @param BillingSearchStructure $billingSearchStructure
+     * @return array
      *
-     * @return BalanceListStructure[]
      * @throws \Exception
      */
-    public function balancesList(BillingSearchStructure $billingSearchStructure) : array
+    public function balancesList(BillingSearchDTO $dto) : array
     {
-        $url = '/api/v1/balances_list';
-        $data = [
-            'where' => $billingSearchStructure->getWhere(),
-            'sort'  => $billingSearchStructure->getSort(),
-            'page'  => $billingSearchStructure->getPage(),
-            'limit' => $billingSearchStructure->getLimit(),
-        ];
-
-        $resultData = $this->sendRequestAll($url, $data);
+        $resultData = $this->sendRequestAll('/balances_list', $dto->toFullSnakeArray());
 
         $balancesList = [];
         foreach ($resultData['result'] as $record) {
-            $result = new BalanceListStructure();
+            $result = new BalanceListDTO();
             $result->setObjectType($record['object_type'] ?? null);
             $result->setObjectId($record['object_id'] ?? null);
             foreach ($record['balances'] ?? [] as $balance) {
-                $balanceBrief = new BalanceBriefStructure();
+                $balanceBrief = new BalanceBriefDTO();
                 $balanceBrief->setType($balance['type'] ?? null);
                 $balanceBrief->setAccountType($balance['account_type'] ?? null);
                 $balanceBrief->setCurrencyCode($balance['currency_code'] ?? null);
@@ -244,27 +245,17 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * Get invoices list
-     *
-     * @param BillingSearchStructure $billingSearchStructure
+     * @param BillingSearchDTO $dto
      *
      * @return array
      */
-    public function invoicesList(BillingSearchStructure $billingSearchStructure) : array
+    public function invoicesList(BillingSearchDTO $dto) : array
     {
-        $url = '/api/v2/invoices_list';
-        $data = [
-            'where' => $billingSearchStructure->getWhere(),
-            'sort'  => $billingSearchStructure->getSort(),
-            'page'  => $billingSearchStructure->getPage(),
-            'limit' => $billingSearchStructure->getLimit(),
-        ];
-
-        $resultData = $this->sendRequestAll($url, $data);
+        $resultData = $this->sendRequestAll('/invoices_list', $dto->toFullSnakeArray());
 
         $invoicesList = [];
         foreach ($resultData['result'] as $record) {
-            $result = new InvoicesListItemStructure();
+            $result = new InvoicesListDTO();
             $result->setTargetAmount($record['target_amount'] ?? null);
             $result->setType($record['type'] ?? null);
             $result->setOrderId($record['order_id'] ?? null);
@@ -287,14 +278,12 @@ class BillingGuzzle implements BillingInterface
             $result->setSourceBalanceAmount($record['source_balance_amount'] ?? null);
             $result->setSourceBalanceCurrencyCode($record['source_balance_currency_code'] ?? null);
             $result->setSourceBalanceType($record['source_balance_type'] ?? null);
-            $result->setPurpose($record['purpose'] ?? null);
-            $result->setPurposeType($record['purpose_type'] ?? null);
             $result->setDescription($record['description'] ?? '&mdash;');
 
             $invoicesList[] = $result;
         }
 
-        $pages = $this->getPages($resultData, $billingSearchStructure->getPage());
+        $pages = $this->getPages($resultData, $dto->getPage());
 
         return [
             InvoicesListConstants::INVOICES_LIST_SECTION_NAME => $invoicesList,
@@ -303,351 +292,103 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * Create order
-     *
-     * @param OrderCreateStructure $orderCreateStructure
+     * @param OrderDTO $dto
      */
-    public function createOrder(OrderCreateStructure $orderCreateStructure) : void
+    public function createOrder(OrderDTO $dto) : void
     {
-        $url = '/api/v1/order_create';
-        $data = [
-            'order_id'                  => $orderCreateStructure->getOrderId(),
-            'trade_partner_id'          => $orderCreateStructure->getTradePartnerId(),
-            'object_type'               => $orderCreateStructure->getObjectType(),
-            'object_id'                 => $orderCreateStructure->getObjectId(),
-            'currency_code'             => $orderCreateStructure->getCurrencyCode(),
-            'amount'                    => (float)$orderCreateStructure->getAmount(),
-            'delivery_amount'           => (float)$orderCreateStructure->getDeliveryAmount(),
-            'is_trade_partner_delivery' => $orderCreateStructure->isTradePartnerDelivery(),
-            'is_cash_payment'           => $orderCreateStructure->isCashPayment(),
-            'details'                   => $orderCreateStructure->getDetails(),
-            'description'               => $orderCreateStructure->getDescription(),
-        ];
-
-        $this->sendRequest($url, $data);
+        $this->sendRequest('/order_create', $dto->toFullSnakeArray());
     }
 
     /**
-     * Completed order
-     *
-     * @param int $orderId
-     *
-     * @return mixed|void
-     *
-     * @throws StructureException
-     * @throws ClientException
-     * @throws RemoteException
-     * @throws TransportException
+     * @param TransactionTokenDTO $dto
      */
-    public function completedOrder(int $orderId) : void
+    public function completedOrder(TransactionTokenDTO $dto) : void
     {
-        $url = '/api/v1/order_completed';
-        $data = [
-            'order_id' => $orderId,
-        ];
-
-        $this->sendRequest($url, $data);
+        $this->sendRequest('/order_completed', $dto->toFullSnakeArray());
     }
 
     /**
-     * Cancel order
-     *
-     * @param int $orderId
-     *
-     * @return mixed|void
-     *
-     * @throws StructureException
-     * @throws ClientException
-     * @throws RemoteException
-     * @throws TransportException
+     * @param TransactionTokenDTO $dto
      */
-    public function cancelOrder(int $orderId) : void
+    public function cancelOrder(TransactionTokenDTO $dto) : void
     {
-        $url = '/api/v1/order_cancel';
-        $data = [
-            'order_id' => $orderId,
-        ];
-
-        $this->sendRequest($url, $data);
+        $this->sendRequest('/order_cancel', $dto->toFullSnakeArray());
     }
 
     /**
      * Send if order paid
      *
-     * @param OrderPaidStructure $orderPaidStructure
+     * @param OrderPaidDTO $dto
      */
-    public function paidOrder(OrderPaidStructure $orderPaidStructure) : void
+    public function paidOrder(OrderPaidDTO $dto) : void
     {
-        $url = '/api/v1/order_paid';
-        $data = [
-            'order_id'                  => $orderPaidStructure->getOrderId(),
-            'trade_partner_id'          => $orderPaidStructure->getTradePartnerId(),
-            'is_trade_partner_delivery' => $orderPaidStructure->isTradePartnerDelivery(),
-            'delivery_amount'           => (float)$orderPaidStructure->getDeliveryAmount(),
-            'is_cash_payment'           => $orderPaidStructure->isCashPayment(),
-            'currency_code'             => $orderPaidStructure->getCurrencyCode(),
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * Send if order is done
-     *
-     * @param int $orderId
-     */
-    public function doneOrder(int $orderId) : void
-    {
-        $url = '/api/v1/order_done';
-        $data = [
-            'order_id' => $orderId,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * Calculate bonus for pre-order
-     *
-     * @param int $tradePartnerId
-     * @param string $currencyCode
-     * @param float $amount
-     *
-     * @return BonusAmountStructure
-     *
-     * @throws StructureException
-     * @throws ClientException
-     * @throws RemoteException
-     * @throws TransportException
-     */
-    public function calculateBonus(int $tradePartnerId, string $currencyCode, float $amount) : BonusAmountStructure
-    {
-        $url = '/api/v1/bonus_calculate';
-        $data = [
-            'trade_partner_id' => $tradePartnerId,
-            'currency_code'    => $currencyCode,
-            'amount'           => $amount,
-        ];
-
-        $resultData = $this->sendRequest($url, $data);
-
-        $result = new BonusAmountStructure();
-        $result->setAmount($resultData['amount'] ?? null);
-
-        return $result;
-    }
-
-    /**
-     * Calculate extra bonus for pre-order
-     *
-     * @param OfferScheduleStructure[] $offerSchedules
-     *
-     * @return ExtraBonusStructure[]
-     */
-    public function calculateExtraBonus(array $offerSchedules) : array
-    {
-        $url = '/api/v1/bonus_offers_calculate';
-        $data = [];
-        foreach ($offerSchedules as $offerSchedule) {
-            $data[] = [
-                'offer_id'      => $offerSchedule->getOfferId(),
-                'price'         => $offerSchedule->getPrice(),
-                'currency_code' => $offerSchedule->getCurrencyCode(),
-                'value_type'    => $offerSchedule->getValueType(),
-                'value'         => $offerSchedule->getValue(),
-            ];
-        }
-
-        $resultData = $this->sendRequest($url, $data);
-
-        $extraBonuses = [];
-        foreach ($resultData as $record) {
-            $result = new ExtraBonusStructure();
-            $result->setOfferId($record['offer_id'] ?? null);
-            $result->setCurrencyCode($record['currency_code'] ?? null);
-            $result->setCurrentAmount($record['current_amount'] ?? null);
-            $result->setAncestorOneAmount($record['ancestor1_amount'] ?? null);
-            $result->setAncestorTwoAmount($record['ancestor2_amount'] ?? null);
-
-            $extraBonuses[] = $result;
-        }
-
-        return $extraBonuses;
-    }
-
-    /**
-     * Add prize bonus to object
-     *
-     * @param BonusPrizeAddStructure $bonusPrizeAddStructure
-     */
-    public function addBonusPrize(BonusPrizeAddStructure $bonusPrizeAddStructure) : void
-    {
-        $url = '/api/v1/bonus_prize_add';
-
-        $data = [
-            'object_type'       => $bonusPrizeAddStructure->getObjectType(),
-            'object_id'         => $bonusPrizeAddStructure->getObjectId(),
-            'amount'            => (float)$bonusPrizeAddStructure->getAmount(),
-            'transaction_token' => $bonusPrizeAddStructure->getTransactionToken(),
-            'description'       => $bonusPrizeAddStructure->getDescription(),
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * Payment create
-     *
-     * @see ObjectDataConstants::*
-     *
-     * @param string $transactionToken
-     * @param string $objectType
-     * @param int $objectId
-     * @param string $currencyCode
-     * @param float $amount
-     *
-     * @throws StructureException
-     * @throws ClientException
-     * @throws RemoteException
-     * @throws TransportException
-     */
-    public function createPayment(
-        string $transactionToken,
-        string $objectType,
-        int $objectId,
-        string $currencyCode,
-        float $amount
-    ) : void {
-        $url = '/api/v1/payment_create';
-        $data = [
-            'transaction_token' => $transactionToken,
-            'object_type'       => $objectType,
-            'object_id'         => $objectId,
-            'currency_code'     => $currencyCode,
-            'amount'            => $amount,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * Complete payment
-     *
-     * @see ObjectDataConstants::*
-     *
-     * @param string $transactionToken
-     * @param string $objectType
-     * @param int $objectId
-     *
-     * @throws StructureException
-     * @throws ClientException
-     * @throws RemoteException
-     * @throws TransportException
-     */
-    public function completePayment(string $transactionToken, string $objectType, int $objectId) : void
-    {
-        $url = '/api/v1/payment_complete';
-        $data = [
-            'transaction_token' => $transactionToken,
-            'object_type'       => $objectType,
-            'object_id'         => $objectId,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * Сancel payment
-     *
-     * @see ObjectDataConstants::*
-     *
-     * @param string $transactionToken
-     * @param string $objectType
-     * @param int $objectId
-     *
-     * @throws StructureException
-     * @throws ClientException
-     * @throws RemoteException
-     * @throws TransportException
-     */
-    public function cancelPayment(string $transactionToken, string $objectType, int $objectId) : void
-    {
-        $url = '/api/v1/payment_cancel';
-        $data = [
-            'transaction_token' => $transactionToken,
-            'object_type'       => $objectType,
-            'object_id'         => $objectId,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * Transfer bonus to other user
-     *
-     * @param string $sourceObjectType
-     * @param int $sourceObjectId
-     * @param string $targetObjectType
-     * @param int $targetObjectId
-     * @param $amount
-     */
-    public function transferBonus(
-        string $sourceObjectType,
-        int $sourceObjectId,
-        string $targetObjectType,
-        int $targetObjectId,
-        $amount
-    ) : void {
-        $url = '/api/v1/bonus_transfer';
-        $data = [
-            'source_object_type' => $sourceObjectType,
-            'source_object_id'   => $sourceObjectId,
-            'target_object_type' => $targetObjectType,
-            'target_object_id'   => $targetObjectId,
-            'amount'             => (float)$amount,
-        ];
-
-        $this->sendRequest($url, $data);
+        $this->sendRequest('/order_paid', $dto->toFullSnakeArray());
     }
 
     /**
      * Refill user or company current balance
      *
-     * @param RefillAndChargeOffStructure $refillAndChargeOffStructure
+     * @param BalanceRefillOrChargeOffRequestDTO $dto
      */
-    public function balanceRefill(RefillAndChargeOffStructure $refillAndChargeOffStructure) : void
+    public function balanceRefill(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
-        $url = '/api/v1/balances_refill';
-        $data = [
-            'transaction_token' => $refillAndChargeOffStructure->getTransactionToken(),
-            'object_type'       => $refillAndChargeOffStructure->getObjectType(),
-            'object_id'         => $refillAndChargeOffStructure->getObjectId(),
-            'amount'            => (float)$refillAndChargeOffStructure->getAmount(),
-            'currency_code'     => $refillAndChargeOffStructure->getCurrencyCode(),
-            'description'       => $refillAndChargeOffStructure->getDescription(),
-        ];
-
-        $this->sendRequest($url, $data);
+        $this->sendRequest('/balances_refill', $dto->toFullSnakeArray());
     }
 
     /**
-     * Charge off user or company current balance
-     *
-     * @param RefillAndChargeOffStructure $refillAndChargeOffStructure
+     * @param BalanceRefillOrChargeOffRequestDTO $dto
      */
-    public function balanceChargeOff(RefillAndChargeOffStructure $refillAndChargeOffStructure) : void
+    public function balanceChargeOff(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
-        $url = '/api/v1/balances_charge_off';
-        $data = [
-            'transaction_token' => $refillAndChargeOffStructure->getTransactionToken(),
-            'object_type'       => $refillAndChargeOffStructure->getObjectType(),
-            'object_id'         => $refillAndChargeOffStructure->getObjectId(),
-            'amount'            => (float)$refillAndChargeOffStructure->getAmount(),
-            'currency_code'     => $refillAndChargeOffStructure->getCurrencyCode(),
-            'description'       => $refillAndChargeOffStructure->getDescription(),
-        ];
+        $this->sendRequest('/balances_charge_off', $dto->toFullSnakeArray());
+    }
 
-        $this->sendRequest($url, $data);
+    /**
+     * @param BalanceRefillOrChargeOffRequestDTO $dto
+     */
+    public function chargeOffPrepare(BalanceRefillOrChargeOffRequestDTO $dto) : void
+    {
+        $this->sendRequest('/charge_off_prepare', $dto->toFullSnakeArray());
+    }
+
+    /**
+     * @param TransactionTokenDTO $dto
+     */
+    public function chargeOffComplete(TransactionTokenDTO $dto) : void
+    {
+        $this->sendRequest('/charge_off_complete', $dto->toFullSnakeArray());
+    }
+
+    /**
+     * @param TransactionTokenDTO $dto
+     */
+    public function chargeOffCancel(TransactionTokenDTO $dto) : void
+    {
+        $this->sendRequest('/charge_off_cancel', $dto->toFullSnakeArray());
+    }
+
+    /**
+     * @param ChargeOffOrRefillPrepareDTO $dto
+     */
+    public function refillPrepare(ChargeOffOrRefillPrepareDTO $dto) : void
+    {
+        $this->sendRequest('/refill_prepare', $dto->toFullSnakeArray());
+    }
+
+    /**
+     * @param TransactionTokenDTO $dto
+     */
+    public function refillComplete(TransactionTokenDTO $dto) : void
+    {
+        $this->sendRequest('/refill_complete', $dto->toFullSnakeArray());
+    }
+
+    /**
+     * @param TransactionTokenDTO $dto
+     */
+    public function refillReject(TransactionTokenDTO $dto) : void
+    {
+        $this->sendRequest('/refill_cancel', $dto->toFullSnakeArray());
     }
 
     /**
@@ -687,7 +428,7 @@ class BillingGuzzle implements BillingInterface
                 ]
             );
 
-            if ($response->getStatusCode() === Response::HTTP_NO_CONTENT) {
+            if ($response->getStatusCode() === HttpStatusCodes::HTTP_NO_CONTENT) {
                 return [];
             }
 
@@ -697,14 +438,15 @@ class BillingGuzzle implements BillingInterface
                 throw new StructureException('Invalid format of response.');
             }
 
-            if (\in_array($response->getStatusCode(), [Response::HTTP_OK, Response::HTTP_CREATED,], true)) {
+            if (\in_array(
+                $response->getStatusCode(),
+                [HttpStatusCodes::HTTP_OK, HttpStatusCodes::HTTP_CREATED,], true)
+            ) {
                 if (!array_key_exists('result', $responseData)) {
                     throw new StructureException('Key "result" not found in response body.');
                 }
-            } else {
-                if (!array_key_exists('error', $responseData)) {
-                    throw new StructureException('Key "error" not found in response body.');
-                }
+            } elseif (!array_key_exists('error', $responseData)) {
+                throw new StructureException('Key "error" not found in response body.');
             }
 
             return $responseData;
@@ -717,93 +459,5 @@ class BillingGuzzle implements BillingInterface
         } catch (GuzzleException $exception) {
             throw new TransportException($exception, $response ?? null);
         }
-    }
-
-    /**
-     * @param RefillAndChargeOffStructure $refillAndChargeOffStructure
-     */
-    public function chargeOffPrepare(RefillAndChargeOffStructure $refillAndChargeOffStructure) : void
-    {
-        $url = '/api/v1/charge_off_prepare';
-        $data = [
-            'transaction_token' => $refillAndChargeOffStructure->getTransactionToken(),
-            'object_type'       => $refillAndChargeOffStructure->getObjectType(),
-            'object_id'         => $refillAndChargeOffStructure->getObjectId(),
-            'amount'            => $refillAndChargeOffStructure->getAmount(),
-            'currency_code'     => $refillAndChargeOffStructure->getCurrencyCode(),
-            'purpose_type'      => $refillAndChargeOffStructure->getPurposeType(),
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * @param RefillAndChargeOffStructure $refillAndChargeOffStructure
-     */
-    public function refillPrepare(RefillAndChargeOffStructure $refillAndChargeOffStructure) : void
-    {
-        $url = '/api/v1/refill_prepare';
-        $data = [
-            'transaction_token' => $refillAndChargeOffStructure->getTransactionToken(),
-            'object_type'       => $refillAndChargeOffStructure->getObjectType(),
-            'object_id'         => $refillAndChargeOffStructure->getObjectId(),
-            'amount'            => $refillAndChargeOffStructure->getAmount(),
-            'currency_code'     => $refillAndChargeOffStructure->getCurrencyCode(),
-            'purpose_type'      => $refillAndChargeOffStructure->getPurposeType(),
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * @param string $transactionToken
-     */
-    public function chargeOffDone(string $transactionToken) : void
-    {
-        $url = '/api/v1/charge_off_complete';
-        $data = [
-            'transaction_token' => $transactionToken,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * @param string $transactionToken
-     */
-    public function chargeOffReject(string $transactionToken) : void
-    {
-        $url = '/api/v1/charge_off_cancel';
-        $data = [
-            'transaction_token' => $transactionToken,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * @param string $transactionToken
-     */
-    public function refillDone(string $transactionToken) : void
-    {
-        $url = '/api/v1/refill_complete';
-        $data = [
-            'transaction_token' => $transactionToken,
-        ];
-
-        $this->sendRequest($url, $data);
-    }
-
-    /**
-     * @param string $transactionToken
-     */
-    public function refillReject(string $transactionToken) : void
-    {
-        $url = '/api/v1/refill_cancel';
-        $data = [
-            'transaction_token' => $transactionToken,
-        ];
-
-        $this->sendRequest($url, $data);
     }
 }

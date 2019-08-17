@@ -1,6 +1,6 @@
 <?php
 
-namespace Qooiz\BillingSDK\xxx;
+namespace Qooiz\BillingSDK\DTO\Response;
 
 /**
  * Class BalanceListDTO
