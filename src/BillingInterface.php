@@ -29,14 +29,14 @@ interface BillingInterface
      *
      * @return ObjectDataDTO
      */
-    public function createObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO;
+    public function createObjectData(ObjectDataDTO $dto) : ObjectDataDTO;
 
     /**
      * @param DTO\ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
      */
-    public function updateObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO;
+    public function updateObjectData(ObjectDataDTO $dto) : ObjectDataDTO;
 
     /**
      * @param ObjectDataGetOrDeleteDTO $dto

@@ -3,13 +3,14 @@
 namespace Qooiz\BillingSDK\DTO\Response;
 
 use Qooiz\BillingSDK\Constants\Constants;
+use Scaleplan\DTO\DTO;
 
 /**
  * Class BalanceBriefDTO
  *
  * @package Qooiz\BillingSDK\DTO
  */
-class BalanceBriefDTO
+class BalanceBriefDTO extends DTO
 {
     /**
      * @var string|null

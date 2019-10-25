@@ -2,11 +2,13 @@
 
 namespace Qooiz\BillingSDK\DTO\Response;
 
+use Scaleplan\DTO\DTO;
+
 /**
  * Class ObjectDataDTO
  * @package Qooiz\BillingSDK\DTO
  */
-class ObjectDataDTO
+class ObjectDataDTO extends DTO
 {
     /** @var int */
     private $id;

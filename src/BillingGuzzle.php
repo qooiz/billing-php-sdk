@@ -34,7 +34,7 @@ use Scaleplan\HttpStatus\HttpStatusCodes;
 /**
  * API wrapper for contracts of BillingAPI
  *
- * Documentation: http://billing.test.qooiz-develop.me/api/docs
+ * Documentation: http://template.b.qooiz-develop.me/api/docs
  *
  * @package App\Lib
  */
@@ -56,13 +56,13 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * @param DTO\ObjectDataDTO $dto
+     * @param ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
      */
-    public function createObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO
+    public function createObjectData(ObjectDataDTO $dto) : ObjectDataDTO
     {
-        $resultData = $this->sendRequest('/object_data_create', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequest('/api/v1/object_data_create', $dto->toFullSnakeArray());
 
         $result = new ObjectDataDTO();
         $result->setObjectType($resultData['object_type'] ?? null);
@@ -78,9 +78,9 @@ class BillingGuzzle implements BillingInterface
      *
      * @return ObjectDataDTO
      */
-    public function updateObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO
+    public function updateObjectData(ObjectDataDTO $dto) : ObjectDataDTO
     {
-        $resultData = $this->sendRequest('/object_data_update', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequest('/api/v1/object_data_update', $dto->toFullSnakeArray());
 
         $result = new ObjectDataDTO();
         $result->setObjectType($resultData['object_type'] ?? null);
@@ -96,7 +96,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function deleteObjectData(ObjectDataGetOrDeleteDTO $dto) : void
     {
-        $this->sendRequest('/object_data_delete', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/object_data_delete', $dto->toFullSnakeArray());
     }
 
     /**
@@ -106,7 +106,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function getObjectData(ObjectDataGetOrDeleteDTO $dto) : ObjectDataDTO
     {
-        $resultData = $this->sendRequest('/object_data_get', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequest('/api/v1/object_data_get', $dto->toFullSnakeArray());
 
         $result = new ObjectDataDTO();
         $result->setObjectType($resultData['object_type'] ?? null);
@@ -121,7 +121,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function getAllSettings() : array
     {
-        $resultData = $this->sendRequest('/settings_get_all');
+        $resultData = $this->sendRequest('/api/v1/settings_get_all');
 
         $settings = [];
         foreach ($resultData as $record) {
@@ -144,7 +144,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function updateSettings(SettingRequestDTO $dto) : SettingResponseDTO
     {
-        $resultData = $this->sendRequest('/settings_update', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequest('/api/v1/settings_update', $dto->toFullSnakeArray());
 
         $result = new SettingResponseDTO();
         $result->setKey($resultData['key'] ?? null);
@@ -162,7 +162,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function getBalances(BalanceRequestDTO $dto) : array
     {
-        $resultData = $this->sendRequest('/balances_get', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequest('/api/v1/balances_get', $dto->toFullSnakeArray());
 
         $balances = [];
         foreach ($resultData as $record) {
@@ -213,7 +213,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function balancesList(BillingSearchDTO $dto) : array
     {
-        $resultData = $this->sendRequestAll('/balances_list', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequestAll('/api/v1/balances_list', $dto->toFullSnakeArray());
 
         $balancesList = [];
         foreach ($resultData['result'] as $record) {
@@ -251,7 +251,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function invoicesList(BillingSearchDTO $dto) : array
     {
-        $resultData = $this->sendRequestAll('/invoices_list', $dto->toFullSnakeArray());
+        $resultData = $this->sendRequestAll('/api/v1/invoices_list', $dto->toFullSnakeArray());
 
         $invoicesList = [];
         foreach ($resultData['result'] as $record) {
@@ -296,7 +296,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function createOrder(OrderDTO $dto) : void
     {
-        $this->sendRequest('/order_create', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/order_create', $dto->toFullSnakeArray());
     }
 
     /**
@@ -304,7 +304,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function completedOrder(TransactionTokenDTO $dto) : void
     {
-        $this->sendRequest('/order_completed', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/order_completed', $dto->toFullSnakeArray());
     }
 
     /**
@@ -312,7 +312,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function cancelOrder(TransactionTokenDTO $dto) : void
     {
-        $this->sendRequest('/order_cancel', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/order_cancel', $dto->toFullSnakeArray());
     }
 
     /**
@@ -322,7 +322,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function paidOrder(OrderPaidDTO $dto) : void
     {
-        $this->sendRequest('/order_paid', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/order_paid', $dto->toFullSnakeArray());
     }
 
     /**
@@ -332,7 +332,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function balanceRefill(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
-        $this->sendRequest('/balances_refill', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/balances_refill', $dto->toFullSnakeArray());
     }
 
     /**
@@ -340,7 +340,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function balanceChargeOff(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
-        $this->sendRequest('/balances_charge_off', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/balances_charge_off', $dto->toFullSnakeArray());
     }
 
     /**
@@ -348,7 +348,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function chargeOffPrepare(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
-        $this->sendRequest('/charge_off_prepare', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/charge_off_prepare', $dto->toFullSnakeArray());
     }
 
     /**
@@ -356,7 +356,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function chargeOffComplete(TransactionTokenDTO $dto) : void
     {
-        $this->sendRequest('/charge_off_complete', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/charge_off_complete', $dto->toFullSnakeArray());
     }
 
     /**
@@ -364,7 +364,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function chargeOffCancel(TransactionTokenDTO $dto) : void
     {
-        $this->sendRequest('/charge_off_cancel', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/charge_off_cancel', $dto->toFullSnakeArray());
     }
 
     /**
@@ -372,7 +372,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function refillPrepare(ChargeOffOrRefillPrepareDTO $dto) : void
     {
-        $this->sendRequest('/refill_prepare', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/refill_prepare', $dto->toFullSnakeArray());
     }
 
     /**
@@ -380,7 +380,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function refillComplete(TransactionTokenDTO $dto) : void
     {
-        $this->sendRequest('/refill_complete', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/refill_complete', $dto->toFullSnakeArray());
     }
 
     /**
@@ -388,7 +388,7 @@ class BillingGuzzle implements BillingInterface
      */
     public function refillReject(TransactionTokenDTO $dto) : void
     {
-        $this->sendRequest('/refill_cancel', $dto->toFullSnakeArray());
+        $this->sendRequest('/api/v1/refill_cancel', $dto->toFullSnakeArray());
     }
 
     /**

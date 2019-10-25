@@ -2,12 +2,14 @@
 
 namespace Qooiz\BillingSDK\DTO\Response;
 
+use Scaleplan\DTO\DTO;
+
 /**
  * Class BalanceListDTO
  *
  * @package Qooiz\BillingSDK\DTO
  */
-class BalanceListDTO
+class BalanceListDTO extends DTO
 {
     /**
      * @var string|null
