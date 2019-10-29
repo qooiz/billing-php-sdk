@@ -28,7 +28,7 @@ class ObjectDataDTO extends DTO
     /**
      * @return float
      */
-    public function getCommissionRate() : float
+    public function getCommissionRate()
     {
         return $this->commissionRate;
     }
@@ -36,7 +36,7 @@ class ObjectDataDTO extends DTO
     /**
      * @param float $commissionRate
      */
-    public function setCommissionRate(float $commissionRate) : void
+    public function setCommissionRate($commissionRate) : void
     {
         $this->commissionRate = $commissionRate;
     }
@@ -44,7 +44,7 @@ class ObjectDataDTO extends DTO
     /**
      * @return int|null
      */
-    public function getId() : ?int
+    public function getId()
     {
         return $this->id;
     }
@@ -52,7 +52,7 @@ class ObjectDataDTO extends DTO
     /**
      * @param int|null $id
      */
-    public function setId(?int $id) : void
+    public function setId($id) : void
     {
         $this->id = $id;
     }
@@ -60,7 +60,7 @@ class ObjectDataDTO extends DTO
     /**
      * @return string|null
      */
-    public function getObjectType() : ?string
+    public function getObjectType()
     {
         return $this->objectType;
     }
@@ -68,7 +68,7 @@ class ObjectDataDTO extends DTO
     /**
      * @param string|null $objectType
      */
-    public function setObjectType(?string $objectType) : void
+    public function setObjectType($objectType) : void
     {
         $this->objectType = $objectType;
     }
@@ -76,7 +76,7 @@ class ObjectDataDTO extends DTO
     /**
      * @return int|null
      */
-    public function getObjectId() : ?int
+    public function getObjectId()
     {
         return $this->objectId;
     }
@@ -84,7 +84,7 @@ class ObjectDataDTO extends DTO
     /**
      * @param int|null$objectId
      */
-    public function setObjectId(?int $objectId) : void
+    public function setObjectId($objectId) : void
     {
         $this->objectId = $objectId;
     }
@@ -92,7 +92,7 @@ class ObjectDataDTO extends DTO
     /**
      * @return bool
      */
-    public function isDefault() : ?bool
+    public function isDefault()
     {
         return $this->isDefault;
     }
@@ -100,7 +100,7 @@ class ObjectDataDTO extends DTO
     /**
      * @param bool $isDefault
      */
-    public function setIsDefault(?bool $isDefault) : void
+    public function setIsDefault($isDefault) : void
     {
         $this->isDefault = $isDefault;
     }

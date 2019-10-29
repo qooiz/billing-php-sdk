@@ -29,7 +29,7 @@ class BalanceListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getObjectType() : ?string
+    public function getObjectType()
     {
         return $this->objectType;
     }
@@ -37,7 +37,7 @@ class BalanceListDTO extends DTO
     /**
      * @param string|null $objectType
      */
-    public function setObjectType(?string $objectType) : void
+    public function setObjectType($objectType) : void
     {
         $this->objectType = $objectType;
     }
@@ -45,7 +45,7 @@ class BalanceListDTO extends DTO
     /**
      * @return int|null
      */
-    public function getObjectId() : ?int
+    public function getObjectId()
     {
         return $this->objectId;
     }
@@ -53,7 +53,7 @@ class BalanceListDTO extends DTO
     /**
      * @param int $objectId
      */
-    public function setObjectId(?int $objectId) : void
+    public function setObjectId($objectId) : void
     {
         $this->objectId = $objectId;
     }
@@ -61,7 +61,7 @@ class BalanceListDTO extends DTO
     /**
      * @return BalanceBriefDTO[]
      */
-    public function getBalances() : ?array
+    public function getBalances()
     {
         return $this->balances;
     }
@@ -69,7 +69,7 @@ class BalanceListDTO extends DTO
     /**
      * @param BalanceBriefDTO $balanceBrief
      */
-    public function addBalance(?BalanceBriefDTO $balanceBrief) : void
+    public function addBalance($balanceBrief) : void
     {
         $this->balances[] = $balanceBrief;
     }

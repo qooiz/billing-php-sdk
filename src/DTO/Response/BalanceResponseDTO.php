@@ -74,7 +74,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param string $id
      */
-    public function setId($id)
+    public function setId($id) : void
     {
         $this->id = $id;
     }
@@ -90,7 +90,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param string $objectType
      */
-    public function setObjectType($objectType)
+    public function setObjectType($objectType) : void
     {
         $this->objectType = $objectType;
     }
@@ -106,7 +106,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param int $objectId
      */
-    public function setObjectId($objectId)
+    public function setObjectId($objectId) : void
     {
         $this->objectId = $objectId;
     }
@@ -122,7 +122,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param string $currencyCode
      */
-    public function setCurrencyCode($currencyCode)
+    public function setCurrencyCode($currencyCode) : void
     {
         $this->currencyCode = $currencyCode;
     }
@@ -130,7 +130,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @return float
      */
-    public function getAmount() : float
+    public function getAmount()
     {
         return $this->amount;
     }
@@ -138,7 +138,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param float $amount
      */
-    public function setAmount($amount)
+    public function setAmount($amount) : void
     {
         $this->amount = $amount;
     }
@@ -154,7 +154,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param string $type
      */
-    public function setType(string $type)
+    public function setType($type) : void
     {
         $this->type = $type;
     }
@@ -162,7 +162,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @return string
      */
-    public function getAccountType() : string
+    public function getAccountType()
     {
         return $this->accountType;
     }
@@ -170,7 +170,7 @@ class BalanceResponseDTO extends DTO
     /**
      * @param string $accountType
      */
-    public function setAccountType(string $accountType) : void
+    public function setAccountType($accountType) : void
     {
         $this->accountType = $accountType;
     }

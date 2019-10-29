@@ -44,7 +44,7 @@ class SettingResponseDTO extends DTO
     /**
      * @return string
      */
-    public function getKey() : string
+    public function getKey()
     {
         return $this->key;
     }
@@ -52,7 +52,7 @@ class SettingResponseDTO extends DTO
     /**
      * @param string $key
      */
-    public function setKey(string $key) : void
+    public function setKey($key) : void
     {
         $this->key = $key;
     }
@@ -76,7 +76,7 @@ class SettingResponseDTO extends DTO
     /**
      * @return string
      */
-    public function getType() : string
+    public function getType()
     {
         return $this->type;
     }
@@ -100,7 +100,7 @@ class SettingResponseDTO extends DTO
     /**
      * @param string $description
      */
-    public function setDescription(string $description) : void
+    public function setDescription($description) : void
     {
         $this->description = $description;
     }

@@ -164,7 +164,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string
      */
-    public function getDate() : string
+    public function getDate()
     {
         return $this->date;
     }
@@ -172,7 +172,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string $date
      */
-    public function setDate(string $date) : void
+    public function setDate($date) : void
     {
         $this->date = $date;
     }
@@ -180,7 +180,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string
      */
-    public function getSourceObjectType() : ?string
+    public function getSourceObjectType()
     {
         return $this->sourceObjectType;
     }
@@ -188,7 +188,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $sourceObjectType
      */
-    public function setSourceObjectType(?string $sourceObjectType) : void
+    public function setSourceObjectType($sourceObjectType) : void
     {
         $this->sourceObjectType = $sourceObjectType;
     }
@@ -196,7 +196,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return int|null
      */
-    public function getSourceObjectId() : ?int
+    public function getSourceObjectId()
     {
         return $this->sourceObjectId;
     }
@@ -204,7 +204,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param int|null $sourceObjectId
      */
-    public function setSourceObjectId(?int $sourceObjectId) : void
+    public function setSourceObjectId($sourceObjectId) : void
     {
         $this->sourceObjectId = $sourceObjectId;
     }
@@ -212,7 +212,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getTargetObjectType() : ?string
+    public function getTargetObjectType()
     {
         return $this->targetObjectType;
     }
@@ -220,7 +220,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string $targetObjectType
      */
-    public function setTargetObjectType(string $targetObjectType) : void
+    public function setTargetObjectType($targetObjectType) : void
     {
         $this->targetObjectType = $targetObjectType;
     }
@@ -228,7 +228,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return int|null
      */
-    public function getTargetObjectId() : ?int
+    public function getTargetObjectId()
     {
         return $this->targetObjectId;
     }
@@ -236,7 +236,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param int $targetObjectId
      */
-    public function setTargetObjectId(int $targetObjectId) : void
+    public function setTargetObjectId($targetObjectId) : void
     {
         $this->targetObjectId = $targetObjectId;
     }
@@ -244,7 +244,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string
      */
-    public function getType() : string
+    public function getType()
     {
         return $this->type;
     }
@@ -252,7 +252,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string $type
      */
-    public function setType(string $type) : void
+    public function setType($type) : void
     {
         $this->type = $type;
     }
@@ -260,7 +260,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return int
      */
-    public function getOrderId() : ?int
+    public function getOrderId()
     {
         return $this->orderId;
     }
@@ -268,7 +268,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param int $orderId
      */
-    public function setOrderId(?int $orderId) : void
+    public function setOrderId($orderId) : void
     {
         $this->orderId = $orderId;
     }
@@ -276,7 +276,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getOrderStatus() : ?string
+    public function getOrderStatus()
     {
         return $this->orderStatus;
     }
@@ -284,7 +284,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param mixed $orderStatus
      */
-    public function setOrderStatus(?string $orderStatus) : void
+    public function setOrderStatus($orderStatus) : void
     {
         $this->orderStatus = $orderStatus;
     }
@@ -292,7 +292,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getOrderCurrencyCode() : ?string
+    public function getOrderCurrencyCode()
     {
         return $this->orderCurrencyCode;
     }
@@ -300,7 +300,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $orderCurrencyCode
      */
-    public function setOrderCurrencyCode(?string $orderCurrencyCode) : void
+    public function setOrderCurrencyCode($orderCurrencyCode) : void
     {
         $this->orderCurrencyCode = $orderCurrencyCode;
     }
@@ -308,7 +308,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getTargetBalanceCurrencyCode() : ?string
+    public function getTargetBalanceCurrencyCode()
     {
         return $this->targetBalanceCurrencyCode;
     }
@@ -316,7 +316,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string $targetBalanceCurrencyCode
      */
-    public function setTargetBalanceCurrencyCode(string $targetBalanceCurrencyCode) : void
+    public function setTargetBalanceCurrencyCode($targetBalanceCurrencyCode) : void
     {
         $this->targetBalanceCurrencyCode = $targetBalanceCurrencyCode;
     }
@@ -324,7 +324,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return float|null
      */
-    public function getTargetAmount() : ?float
+    public function getTargetAmount()
     {
         return $this->targetAmount;
     }
@@ -332,7 +332,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param float $targetAmount
      */
-    public function setTargetAmount(float $targetAmount) : void
+    public function setTargetAmount($targetAmount) : void
     {
         $this->targetAmount = $targetAmount;
     }
@@ -340,7 +340,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return float|null
      */
-    public function getOrderAmount() : ?float
+    public function getOrderAmount()
     {
         return $this->orderAmount;
     }
@@ -348,7 +348,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param float|null $orderAmount
      */
-    public function setOrderAmount(?float $orderAmount) : void
+    public function setOrderAmount($orderAmount) : void
     {
         $this->orderAmount = $orderAmount;
     }
@@ -356,7 +356,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return float|null
      */
-    public function getTargetBalanceAmount() : ?float
+    public function getTargetBalanceAmount()
     {
         return $this->targetBalanceAmount;
     }
@@ -364,7 +364,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param float $targetBalanceAmount
      */
-    public function setTargetBalanceAmount(float $targetBalanceAmount) : void
+    public function setTargetBalanceAmount($targetBalanceAmount) : void
     {
         $this->targetBalanceAmount = $targetBalanceAmount;
     }
@@ -372,7 +372,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getTargetBalanceAccountType() : ?string
+    public function getTargetBalanceAccountType()
     {
         return $this->targetBalanceAccountType;
     }
@@ -380,7 +380,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string $targetBalanceAccountType
      */
-    public function setTargetBalanceAccountType(string $targetBalanceAccountType) : void
+    public function setTargetBalanceAccountType($targetBalanceAccountType) : void
     {
         $this->targetBalanceAccountType = $targetBalanceAccountType;
     }
@@ -388,7 +388,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getTargetBalanceType() : ?string
+    public function getTargetBalanceType()
     {
         return $this->targetBalanceType;
     }
@@ -396,7 +396,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string $targetBalanceType
      */
-    public function setTargetBalanceType(string $targetBalanceType) : void
+    public function setTargetBalanceType($targetBalanceType) : void
     {
         $this->targetBalanceType = $targetBalanceType;
     }
@@ -404,7 +404,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getBuyerObjectType() : ?string
+    public function getBuyerObjectType()
     {
         return $this->buyerObjectType;
     }
@@ -412,7 +412,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $buyerObjectType
      */
-    public function setBuyerObjectType(?string $buyerObjectType) : void
+    public function setBuyerObjectType($buyerObjectType) : void
     {
         $this->buyerObjectType = $buyerObjectType;
     }
@@ -420,7 +420,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return int|null
      */
-    public function getBuyerObjectId() : ?int
+    public function getBuyerObjectId()
     {
         return $this->buyerObjectId;
     }
@@ -428,7 +428,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param int|null $buyerObjectId
      */
-    public function setBuyerObjectId(?int $buyerObjectId) : void
+    public function setBuyerObjectId($buyerObjectId) : void
     {
         $this->buyerObjectId = $buyerObjectId;
     }
@@ -436,7 +436,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getSourceBalanceCurrencyCode() : ?string
+    public function getSourceBalanceCurrencyCode()
     {
         return $this->sourceBalanceCurrencyCode;
     }
@@ -444,7 +444,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $sourceBalanceCurrencyCode
      */
-    public function setSourceBalanceCurrencyCode(?string $sourceBalanceCurrencyCode) : void
+    public function setSourceBalanceCurrencyCode($sourceBalanceCurrencyCode) : void
     {
         $this->sourceBalanceCurrencyCode = $sourceBalanceCurrencyCode;
     }
@@ -452,7 +452,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return float|null
      */
-    public function getSourceBalanceAmount() : ?float
+    public function getSourceBalanceAmount()
     {
         return $this->sourceBalanceAmount;
     }
@@ -460,7 +460,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param float|null $sourceBalanceAmount
      */
-    public function setSourceBalanceAmount(?float $sourceBalanceAmount) : void
+    public function setSourceBalanceAmount($sourceBalanceAmount) : void
     {
         $this->sourceBalanceAmount = $sourceBalanceAmount;
     }
@@ -468,7 +468,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getSourceBalanceAccountType() : ?string
+    public function getSourceBalanceAccountType()
     {
         return $this->sourceBalanceAccountType;
     }
@@ -476,7 +476,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $sourceBalanceAccountType
      */
-    public function setSourceBalanceAccountType(?string $sourceBalanceAccountType) : void
+    public function setSourceBalanceAccountType($sourceBalanceAccountType) : void
     {
         $this->sourceBalanceAccountType = $sourceBalanceAccountType;
     }
@@ -484,7 +484,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getSourceBalanceType() : ?string
+    public function getSourceBalanceType()
     {
         return $this->sourceBalanceType;
     }
@@ -492,7 +492,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $sourceBalanceType
      */
-    public function setSourceBalanceType(?string $sourceBalanceType) : void
+    public function setSourceBalanceType($sourceBalanceType) : void
     {
         $this->sourceBalanceType = $sourceBalanceType;
     }
@@ -500,7 +500,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return float|null
      */
-    public function getSourceAmount() : ?float
+    public function getSourceAmount()
     {
         return $this->sourceAmount;
     }
@@ -508,7 +508,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param float|null $sourceAmount
      */
-    public function setSourceAmount(?float $sourceAmount) : void
+    public function setSourceAmount($sourceAmount) : void
     {
         $this->sourceAmount = $sourceAmount;
     }
@@ -516,7 +516,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @return string|null
      */
-    public function getDescription() : ?string
+    public function getDescription()
     {
         return $this->description;
     }
@@ -524,7 +524,7 @@ final class InvoicesListDTO extends DTO
     /**
      * @param string|null $description
      */
-    public function setDescription(?string $description) : void
+    public function setDescription($description) : void
     {
         $this->description = $description;
     }

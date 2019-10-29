@@ -40,7 +40,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @return string|null
      */
-    public function getCurrencyCode() : ?string
+    public function getCurrencyCode()
     {
         return $this->currencyCode;
     }
@@ -48,7 +48,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @param string|null $currencyCode
      */
-    public function setCurrencyCode(?string $currencyCode) : void
+    public function setCurrencyCode($currencyCode) : void
     {
         $this->currencyCode = $currencyCode;
     }
@@ -56,7 +56,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @return float|null
      */
-    public function getAmount() : ?float
+    public function getAmount()
     {
         return $this->amount;
     }
@@ -64,7 +64,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @param float|null $amount
      */
-    public function setAmount(?float $amount) : void
+    public function setAmount($amount) : void
     {
         $this->amount = $amount;
     }
@@ -72,7 +72,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @return string|null
      */
-    public function getType() : ?string
+    public function getType()
     {
         return $this->type;
     }
@@ -80,7 +80,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @param string|null $type
      */
-    public function setType(?string $type) : void
+    public function setType($type) : void
     {
         $this->type = $type;
     }
@@ -88,7 +88,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @return string
      */
-    public function getAccountType() : ?string
+    public function getAccountType()
     {
         return $this->accountType;
     }
@@ -96,7 +96,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @param string $accountType
      */
-    public function setAccountType(?string $accountType) : void
+    public function setAccountType($accountType) : void
     {
         $this->accountType = $accountType;
     }
@@ -106,7 +106,7 @@ class BalanceBriefDTO extends DTO
      *
      * @return float
      */
-    public function getAmountFormatted() : ?float
+    public function getAmountFormatted()
     {
         return floor($this->getAmount() * Constants::BALANCE_MULTIPLIER) / Constants::BALANCE_MULTIPLIER;
     }
@@ -114,7 +114,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @return \DateTimeImmutable
      */
-    public function getUpdatedAt() : ?\DateTimeImmutable
+    public function getUpdatedAt()
     {
         return $this->updatedAt;
     }
@@ -122,7 +122,7 @@ class BalanceBriefDTO extends DTO
     /**
      * @param \DateTimeImmutable $updatedAt
      */
-    public function setUpdatedAt(?\DateTimeImmutable $updatedAt) : void
+    public function setUpdatedAt($updatedAt) : void
     {
         $this->updatedAt = $updatedAt;
     }

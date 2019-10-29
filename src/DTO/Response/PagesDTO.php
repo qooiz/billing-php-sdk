@@ -59,7 +59,7 @@ class PagesDTO extends DTO
     /**
      * @return int
      */
-    public function getFirst() : int
+    public function getFirst()
     {
         return $this->first;
     }
@@ -67,7 +67,7 @@ class PagesDTO extends DTO
     /**
      * @param int $first
      */
-    public function setFirst(int $first) : void
+    public function setFirst($first) : void
     {
         $this->first = $first;
     }
@@ -75,7 +75,7 @@ class PagesDTO extends DTO
     /**
      * @return int
      */
-    public function getLast() : int
+    public function getLast()
     {
         return $this->last;
     }
@@ -83,7 +83,7 @@ class PagesDTO extends DTO
     /**
      * @param int $last
      */
-    public function setLast(int $last) : void
+    public function setLast($last) : void
     {
         $this->last = $last;
     }
@@ -91,7 +91,7 @@ class PagesDTO extends DTO
     /**
      * @return int|null
      */
-    public function getPrev() : ?int
+    public function getPrev()
     {
         return $this->prev;
     }
@@ -99,7 +99,7 @@ class PagesDTO extends DTO
     /**
      * @param int $prev
      */
-    public function setPrev(int $prev) : void
+    public function setPrev($prev) : void
     {
         $this->prev = $prev;
     }
@@ -107,7 +107,7 @@ class PagesDTO extends DTO
     /**
      * @return int
      */
-    public function getCurrent() : int
+    public function getCurrent()
     {
         return $this->current;
     }
@@ -115,7 +115,7 @@ class PagesDTO extends DTO
     /**
      * @param int $current
      */
-    public function setCurrent(int $current) : void
+    public function setCurrent($current) : void
     {
         $this->current = $current;
     }
@@ -123,7 +123,7 @@ class PagesDTO extends DTO
     /**
      * @return int|null
      */
-    public function getNext() : ?int
+    public function getNext()
     {
         return $this->next;
     }
@@ -131,7 +131,7 @@ class PagesDTO extends DTO
     /**
      * @param int $next
      */
-    public function setNext(int $next) : void
+    public function setNext($next) : void
     {
         $this->next = $next;
     }
@@ -139,7 +139,7 @@ class PagesDTO extends DTO
     /**
      * @return int
      */
-    public function getRowCount() : int
+    public function getRowCount()
     {
         return $this->rowCount;
     }
@@ -147,7 +147,7 @@ class PagesDTO extends DTO
     /**
      * @param int $rowCount
      */
-    public function setRowCount(int $rowCount) : void
+    public function setRowCount($rowCount) : void
     {
         $this->rowCount = $rowCount;
     }
