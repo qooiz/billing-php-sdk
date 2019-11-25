@@ -9,12 +9,12 @@ namespace Qooiz\BillingSDK\Constants;
  */
 class ObjectDataConstants
 {
-    public const DISTRIBUTOR   = 'distributor';
+    public const CONSUMER      = 'consumer';
     public const TRADE_PARTNER = 'trade_partner';
     public const SYSTEM        = 'system';
 
     public const ALL_TYPES = [
-        self::DISTRIBUTOR,
+        self::CONSUMER,
         self::TRADE_PARTNER,
         self::SYSTEM,
     ];
