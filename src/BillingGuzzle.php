@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
+use GuzzleHttp\Psr7\Uri;
 use Qooiz\BillingSDK\Constants\BalanceListConstants;
 use Qooiz\BillingSDK\Constants\InvoicesListConstants;
 use Qooiz\BillingSDK\DTO\BalanceRefillOrChargeOffRequestDTO;
@@ -59,6 +60,12 @@ class BillingGuzzle implements BillingInterface
      * @param ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function createObjectData(ObjectDataDTO $dto) : ObjectDataDTO
     {
@@ -74,9 +81,15 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * @param DTO\ObjectDataDTO $dto
+     * @param ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function updateObjectData(ObjectDataDTO $dto) : ObjectDataDTO
     {
@@ -93,6 +106,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param ObjectDataGetOrDeleteDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function deleteObjectData(ObjectDataGetOrDeleteDTO $dto) : void
     {
@@ -103,6 +122,12 @@ class BillingGuzzle implements BillingInterface
      * @param ObjectDataGetOrDeleteDTO $dto
      *
      * @return ObjectDataDTO
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function getObjectData(ObjectDataGetOrDeleteDTO $dto) : ObjectDataDTO
     {
@@ -118,6 +143,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @return SettingResponseDTO[]
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function getAllSettings() : array
     {
@@ -141,6 +172,12 @@ class BillingGuzzle implements BillingInterface
      * @param SettingRequestDTO $dto
      *
      * @return SettingResponseDTO
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function updateSettings(SettingRequestDTO $dto) : SettingResponseDTO
     {
@@ -159,6 +196,12 @@ class BillingGuzzle implements BillingInterface
      * @param BalanceRequestDTO $dto
      *
      * @return BalanceResponseDTO[]
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function getBalances(BalanceRequestDTO $dto) : array
     {
@@ -185,6 +228,8 @@ class BillingGuzzle implements BillingInterface
      * @param int|null $current
      *
      * @return PagesDTO
+     *
+     * @throws PagesDoesNotExistException
      */
     private function getPages(array $resultData, int $current = null) : PagesDTO
     {
@@ -247,7 +292,14 @@ class BillingGuzzle implements BillingInterface
     /**
      * @param BillingSearchDTO $dto
      *
-     * @return array
+     * @return InvoicesListDTO[]
+     *
+     * @throws ClientException
+     * @throws PagesDoesNotExistException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function invoicesList(BillingSearchDTO $dto) : array
     {
@@ -293,6 +345,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param OrderDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function createOrder(OrderDTO $dto) : void
     {
@@ -301,6 +359,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param TransactionTokenDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function completedOrder(TransactionTokenDTO $dto) : void
     {
@@ -309,6 +373,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param TransactionTokenDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function cancelOrder(TransactionTokenDTO $dto) : void
     {
@@ -316,9 +386,13 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * Send if order paid
-     *
      * @param OrderPaidDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function paidOrder(OrderPaidDTO $dto) : void
     {
@@ -326,9 +400,13 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * Refill user or company current balance
-     *
      * @param BalanceRefillOrChargeOffRequestDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function balanceRefill(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
@@ -337,6 +415,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param BalanceRefillOrChargeOffRequestDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function balanceChargeOff(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
@@ -345,6 +429,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param BalanceRefillOrChargeOffRequestDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function chargeOffPrepare(BalanceRefillOrChargeOffRequestDTO $dto) : void
     {
@@ -353,6 +443,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param TransactionTokenDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function chargeOffComplete(TransactionTokenDTO $dto) : void
     {
@@ -361,6 +457,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param TransactionTokenDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function chargeOffCancel(TransactionTokenDTO $dto) : void
     {
@@ -369,6 +471,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param ChargeOffOrRefillPrepareDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function refillPrepare(ChargeOffOrRefillPrepareDTO $dto) : void
     {
@@ -377,6 +485,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param TransactionTokenDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function refillComplete(TransactionTokenDTO $dto) : void
     {
@@ -385,6 +499,12 @@ class BillingGuzzle implements BillingInterface
 
     /**
      * @param TransactionTokenDTO $dto
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     public function refillReject(TransactionTokenDTO $dto) : void
     {
@@ -397,10 +517,11 @@ class BillingGuzzle implements BillingInterface
      *
      * @return array
      *
-     * @throws StructureException
      * @throws ClientException
      * @throws RemoteException
+     * @throws StructureException
      * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     protected function sendRequest(string $url, array $data = []) : array
     {
@@ -412,13 +533,19 @@ class BillingGuzzle implements BillingInterface
      * @param array $data
      *
      * @return array
+     *
+     * @throws ClientException
+     * @throws RemoteException
+     * @throws StructureException
+     * @throws TransportException
+     * @throws \InvalidArgumentException
      */
     protected function sendRequestAll(string $url, array $data = []) : array
     {
         try {
-            $response = $this->client->request(
-                'POST',
-                $url,
+            $uri = (new Uri($url))->withScheme('http');
+            $response = $this->client->post(
+                $uri,
                 [
                     'body'    => json_encode($data, JSON_PRESERVE_ZERO_FRACTION),
                     'headers' => [
