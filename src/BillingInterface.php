@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Qooiz\BillingSDK;
 
@@ -29,14 +30,14 @@ interface BillingInterface
      *
      * @return ObjectDataDTO
      */
-    public function createObjectData(ObjectDataDTO $dto) : ObjectDataDTO;
+    public function createObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO;
 
     /**
      * @param DTO\ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
      */
-    public function updateObjectData(ObjectDataDTO $dto) : ObjectDataDTO;
+    public function updateObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO;
 
     /**
      * @param ObjectDataGetOrDeleteDTO $dto

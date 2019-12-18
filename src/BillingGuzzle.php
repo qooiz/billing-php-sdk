@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Qooiz\BillingSDK;
 
@@ -57,7 +58,7 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * @param ObjectDataDTO $dto
+     * @param DTO\ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
      *
@@ -67,7 +68,7 @@ class BillingGuzzle implements BillingInterface
      * @throws TransportException
      * @throws \InvalidArgumentException
      */
-    public function createObjectData(ObjectDataDTO $dto) : ObjectDataDTO
+    public function createObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO
     {
         $resultData = $this->sendRequest('/api/v1/object_data_create', $dto->toFullSnakeArray());
 
@@ -81,7 +82,7 @@ class BillingGuzzle implements BillingInterface
     }
 
     /**
-     * @param ObjectDataDTO $dto
+     * @param DTO\ObjectDataDTO $dto
      *
      * @return ObjectDataDTO
      *
@@ -91,7 +92,7 @@ class BillingGuzzle implements BillingInterface
      * @throws TransportException
      * @throws \InvalidArgumentException
      */
-    public function updateObjectData(ObjectDataDTO $dto) : ObjectDataDTO
+    public function updateObjectData(DTO\ObjectDataDTO $dto) : ObjectDataDTO
     {
         $resultData = $this->sendRequest('/api/v1/object_data_update', $dto->toFullSnakeArray());
 
@@ -543,9 +544,14 @@ class BillingGuzzle implements BillingInterface
     protected function sendRequestAll(string $url, array $data = []) : array
     {
         try {
-            $uri = (new Uri($url))->withScheme('http');
-            $response = $this->client->post(
-                $uri,
+//            $uri = (new Uri($url))->withScheme('http');
+//            if (isset($_SERVER['HTTP_HOST']) && $uri->getHost() === Uri::HTTP_DEFAULT_HOST) {
+//                $uri = $uri->withHost($_SERVER['HTTP_HOST']);
+//            }
+
+            $response = $this->client->request(
+                'POST',
+                $url,
                 [
                     'body'    => json_encode($data, JSON_PRESERVE_ZERO_FRACTION),
                     'headers' => [

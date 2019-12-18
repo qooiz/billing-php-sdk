@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Qooiz\BillingSDK\DTO;
 
@@ -60,15 +61,6 @@ class ObjectDataDTO extends DTO
     private $commissionRate;
 
     /**
-     * @var boolean
-     *
-     * @Assert\Type(type="boolean")
-     *
-     * @SWG\Property(property="is_default", type="boolean", example=true)
-     */
-    private $isDefault;
-
-    /**
      * @return string
      */
     public function getObjectType()
@@ -114,21 +106,5 @@ class ObjectDataDTO extends DTO
     public function setCommissionRate($commissionRate) : void
     {
         $this->commissionRate = $commissionRate;
-    }
-
-    /**
-     * @return bool
-     */
-    public function getIsDefault() : bool
-    {
-        return $this->isDefault;
-    }
-
-    /**
-     * @param bool $isDefault
-     */
-    public function setIsDefault(bool $isDefault) : void
-    {
-        $this->isDefault = $isDefault;
     }
 }
