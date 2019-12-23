@@ -8,6 +8,7 @@ use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\Psr7\Uri;
+use GuzzleHttp\RequestOptions;
 use Qooiz\BillingSDK\Constants\BalanceListConstants;
 use Qooiz\BillingSDK\Constants\InvoicesListConstants;
 use Qooiz\BillingSDK\DTO\BalanceRefillOrChargeOffRequestDTO;
@@ -553,8 +554,8 @@ class BillingGuzzle implements BillingInterface
                 'POST',
                 $url,
                 [
-                    'body'    => json_encode($data, JSON_PRESERVE_ZERO_FRACTION),
-                    'headers' => [
+                    RequestOptions::BODY    => json_encode($data, JSON_PRESERVE_ZERO_FRACTION),
+                    RequestOptions::HEADERS => [
                         'Content-Type' => 'application/json',
                         'Accept'       => 'application/json',
                     ],
