@@ -7,7 +7,6 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException as GuzzleClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\ServerException;
-use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\RequestOptions;
 use Qooiz\BillingSDK\Constants\BalanceListConstants;
 use Qooiz\BillingSDK\Constants\InvoicesListConstants;
@@ -37,9 +36,7 @@ use Scaleplan\HttpStatus\HttpStatusCodes;
 /**
  * API wrapper for contracts of BillingAPI
  *
- * Documentation: http://template.b.qooiz-develop.me/api/docs
- *
- * @package App\Lib
+ * Documentation: https://b.qooiz-test.ru/api/docs
  */
 class BillingGuzzle implements BillingInterface
 {

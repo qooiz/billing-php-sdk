@@ -19,9 +19,7 @@ use Qooiz\BillingSDK\DTO\TransactionTokenDTO;
 /**
  * API wrapper for contracts of BillingAPI
  *
- * Documentation: http://billing.test.qooiz-develop.me/api/docs
- *
- * @package App\Lib
+ * Documentation: https://b.qooiz-test.ru/api/docs
  */
 interface BillingInterface
 {
