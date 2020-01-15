@@ -37,7 +37,7 @@ class OrderPaidDTO extends DTO
      *
      * @SWG\Property(property="is_cash_payment", type="bool", example=false)
      */
-    private $isCashPayment;
+    private $isCashPayment = false;
 
     /**
      * @var string
