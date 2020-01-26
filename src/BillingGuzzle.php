@@ -547,16 +547,23 @@ class BillingGuzzle implements BillingInterface
 //                $uri = $uri->withHost($_SERVER['HTTP_HOST']);
 //            }
 
+            $options = [
+                RequestOptions::BODY    => json_encode($data, JSON_PRESERVE_ZERO_FRACTION),
+                RequestOptions::HEADERS => [
+                    'Content-Type' => 'application/json',
+                    'Accept'       => 'application/json',
+                ],
+            ];
+            $user = getenv('BASIC_USER');
+            $password = getenv('BASIC_PASSWORD');
+            if ($user && $password) {
+                $options[RequestOptions::AUTH] = [$user, $password,];
+            }
+
             $response = $this->client->request(
                 'POST',
                 $url,
-                [
-                    RequestOptions::BODY    => json_encode($data, JSON_PRESERVE_ZERO_FRACTION),
-                    RequestOptions::HEADERS => [
-                        'Content-Type' => 'application/json',
-                        'Accept'       => 'application/json',
-                    ],
-                ]
+                $options
             );
 
             if ($response->getStatusCode() === HttpStatusCodes::HTTP_NO_CONTENT) {
