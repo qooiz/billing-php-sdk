@@ -10,12 +10,13 @@
         "scaleplan/dto": "dev-master",
         "scaleplan/http-status": "dev-master",
         "guzzlehttp/guzzle": "^6.3",
-        "zircote/swagger-php": "*",
-        "symfony/validator": "*",
-        "symfony/property-access": "^4.3"
+        "zircote/swagger-php": "^5",
+        "symfony/validator": "^5",
+        "symfony/property-access": "^5"
     },
     "require-dev": {
-        "codeception/codeception": "2.4.x-dev",
+        "roave/security-advisories": "dev-master",
+        "codeception/codeception": "*",
         "sami/sami": "^4.0@dev",
         "avtomon/sami-markdown": "dev-master",
         "avtomon/sami-github": "dev-master"
